@@ -25,6 +25,7 @@ viewHeader =
            , h5 [ class "text-center" ] [  text "A (virtual) gift-giving feast" ]
            , p [] [ text "I will leave Toronto at the end of June to go travel around the world! I  want to get rid of most of my belongings so that what's left can fit in a car."]
            , p [] [ text "Here are some of the items I am giving away! Let me know if you want any of them by messaging me at rafik@rafik.ca or through Facebook." ]
+           , p [] [ text "Note: This is still a bit rough around the edges. I plan to post pictures soon, and provide a way to filter items based on keywords or categories." ]
            ]
 
 
