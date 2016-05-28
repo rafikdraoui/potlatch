@@ -11,6 +11,6 @@ deploy:
 	git merge master
 	elm-make --warn src/Main.elm --output=static/js/potlatch.js
 	git add -f static/js/potlatch.js
-	git commit -m "Update: $(shell date)"
+	git commit --allow-empty -m "Update: $(shell date)"
 	git push origin gh-pages
 	git checkout -
