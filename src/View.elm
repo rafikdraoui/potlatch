@@ -96,7 +96,7 @@ viewItem item =
 viewImage : Item -> Html Msg
 viewImage item =
     let
-        defaultImage = "/static/img/no-image.png"
+        defaultImage = "./static/img/no-image.png"
         url = Maybe.withDefault defaultImage item.image
         imgContainer =
             if item.taken || url == defaultImage then
