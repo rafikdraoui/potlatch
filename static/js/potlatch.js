@@ -8343,6 +8343,14 @@ var _rafikdraoui$potlatch$View$viewHeader = A2(
 			_elm_lang$core$Native_List.fromArray(
 				[
 					_elm_lang$html$Html$text('Here are some of the items I am giving away! Let me know if you want any of them by messaging me at rafik@rafik.ca or through Facebook.')
+				])),
+			A2(
+			_elm_lang$html$Html$p,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Note: This is still a bit rough around the edges. I plan to post pictures soon, and provide a way to filter items based on keywords or categories.')
 				]))
 		]));
 var _rafikdraoui$potlatch$View$view = function (model) {
