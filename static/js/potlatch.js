@@ -8117,7 +8117,7 @@ var _rafikdraoui$potlatch$View$viewFooter = A2(
 				]))
 		]));
 var _rafikdraoui$potlatch$View$viewImage = function (item) {
-	var defaultImage = '/static/img/no-image.png';
+	var defaultImage = './static/img/no-image.png';
 	var url = A2(_elm_lang$core$Maybe$withDefault, defaultImage, item.image);
 	var imgContainer = (item.taken || _elm_lang$core$Native_Utils.eq(url, defaultImage)) ? _elm_lang$html$Html$div(
 		_elm_lang$core$Native_List.fromArray(
