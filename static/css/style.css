@@ -1,0 +1,54 @@
+@font-face {
+    font-family: Charter;
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Charter.woff) format('woff');
+}
+
+body {
+    font-family: "Charter";
+    text-rendering: optimizeLegibility;
+    -moz-font-feature-settings: "kern";
+    -webkit-font-feature-settings: "kern";
+    font-size: 1.8rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.item {
+    border: 1px solid black;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.taken {
+    opacity: 0.5;
+}
+
+.description {
+    min-height: 2.5em;
+}
+
+header p {
+    max-width: 80%;
+    margin: 1em auto;
+}
+
+footer span {
+    display: block;
+}
+
+.separator {
+    display: none;
+}
+
+@media (min-width: 750px) {
+    footer span {
+        display: inline;
+    }
+    .separator {
+        display: inline;
+    }
+}
