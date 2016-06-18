@@ -1,9 +1,13 @@
 module View exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, classList, href, id, src)
+import Html.Attributes exposing (
+    class, classList, href, id, placeholder, src, type'
+    )
+import Html.Events exposing (onInput)
+import String as S
 
-import Model exposing (Model, Msg, Item, Status(..))
+import Model exposing (Model, Msg(..), Item, Status(..))
 import Utils exposing (splitInGroupsOf, slugify)
 
 
@@ -25,9 +29,21 @@ viewHeader =
            , h5 [ class "text-center" ] [  text "A (virtual) gift-giving feast" ]
            , p [] [ text "I will leave Toronto at the end of June to go travel around the world! I  want to get rid of most of my belongings so that what's left can fit in a car."]
            , p [] [ text "Here are some of the items I am giving away! Let me know if you want any of them by messaging me at rafik@rafik.ca or through Facebook." ]
-           , p [] [ text "Note: This is still a bit rough around the edges. I plan to post pictures soon, and provide a way to filter items based on keywords or categories." ]
+           , viewFilterForm
            ]
 
+
+viewFilterForm : Html Msg
+viewFilterForm =
+    div [ class "row" ]
+        [ div [ class "six columns offset-by-three"]
+              [ input [ type' "search"
+                      , class "u-full-width"
+                      , placeholder "Filter items"
+                      , onInput Filter
+                      ]
+                      [] ]
+        ]
 
 viewBody: Model -> Html Msg
 viewBody model =
@@ -38,7 +54,7 @@ viewBody model =
         Error err ->
             viewError err
         Done ->
-            viewItems model.items
+            viewItems model
 
 
 viewError : String -> Html Msg
@@ -52,10 +68,20 @@ viewError err =
         ]
 
 
-viewItems : List Item -> Html Msg
-viewItems items =
+filterItems : String -> List Item -> List Item
+filterItems query items =
     let
-        (taken, available) = List.partition .taken items
+        tags = query |> S.toLower |> S.words
+        isValid tags name = List.all (\t -> S.contains t name) tags
+    in
+        List.filter ( isValid tags << S.toLower << .name ) items
+
+
+viewItems : Model -> Html Msg
+viewItems model =
+    let
+        visibleItems = filterItems model.query model.items
+        (taken, available) = List.partition .taken visibleItems
     in
         div []
             [ viewItemsSection available
