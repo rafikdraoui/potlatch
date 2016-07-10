@@ -36,6 +36,10 @@ header p {
     margin: 1em auto;
 }
 
+header input {
+    font-size: large;
+}
+
 footer span {
     display: block;
 }

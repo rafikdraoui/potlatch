@@ -2,7 +2,7 @@ module Model exposing
     (init
     , update
     , Model
-    , Msg
+    , Msg(..)
     , Item
     , Status(..)
     )
@@ -41,16 +41,18 @@ type Status
 type alias Model =
     { items : List Item
     , status : Status
+    , query : String
     }
 
 
 type Msg
     = FetchSuccess (List Item)
     | FetchFailure Http.Error
+    | Filter String
 
 
 init : { itemsUrl : String } -> (Model, Cmd Msg)
-init { itemsUrl } = { items = [],  status = Loading } ! [ fetchItems itemsUrl ]
+init { itemsUrl } = { items = [],  status = Loading, query = "" } ! [ fetchItems itemsUrl ]
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -60,6 +62,8 @@ update msg model =
             { model | items = items , status = Done } ! []
         FetchFailure err ->
             { model | status = Error (toString err) } ! []
+        Filter query ->
+            { model | query = query } ! []
 
 
 items : Decoder (List Item)
@@ -81,4 +85,3 @@ fetchItems url =
         task = Http.get ("items" := items) url
     in
         Task.perform FetchFailure FetchSuccess task
-
