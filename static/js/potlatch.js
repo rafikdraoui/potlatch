@@ -7567,6 +7567,107 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode_ops[':='], 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'checked']),
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'value']),
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+
 //import Dict, List, Maybe, Native.Scheduler //
 
 var _evancz$elm_http$Native_Http = function() {
@@ -7989,9 +8090,9 @@ var _rafikdraoui$potlatch$Model$items = function () {
 		A2(_elm_lang$core$Json_Decode_ops[':='], 'taken', _elm_lang$core$Json_Decode$bool));
 	return _elm_lang$core$Json_Decode$list(item);
 }();
-var _rafikdraoui$potlatch$Model$Model = F2(
-	function (a, b) {
-		return {items: a, status: b};
+var _rafikdraoui$potlatch$Model$Model = F3(
+	function (a, b, c) {
+		return {items: a, status: b, query: c};
 	});
 var _rafikdraoui$potlatch$Model$Done = {ctor: 'Done'};
 var _rafikdraoui$potlatch$Model$Error = function (a) {
@@ -8000,28 +8101,40 @@ var _rafikdraoui$potlatch$Model$Error = function (a) {
 var _rafikdraoui$potlatch$Model$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'FetchSuccess') {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				_elm_lang$core$Native_Utils.update(
-					model,
-					{items: _p0._0, status: _rafikdraoui$potlatch$Model$Done}),
-				_elm_lang$core$Native_List.fromArray(
-					[]));
-		} else {
-			return A2(
-				_elm_lang$core$Platform_Cmd_ops['!'],
-				_elm_lang$core$Native_Utils.update(
-					model,
-					{
-						status: _rafikdraoui$potlatch$Model$Error(
-							_elm_lang$core$Basics$toString(_p0._0))
-					}),
-				_elm_lang$core$Native_List.fromArray(
-					[]));
+		switch (_p0.ctor) {
+			case 'FetchSuccess':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{items: _p0._0, status: _rafikdraoui$potlatch$Model$Done}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			case 'FetchFailure':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							status: _rafikdraoui$potlatch$Model$Error(
+								_elm_lang$core$Basics$toString(_p0._0))
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{query: _p0._0}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
 		}
 	});
 var _rafikdraoui$potlatch$Model$Loading = {ctor: 'Loading'};
+var _rafikdraoui$potlatch$Model$Filter = function (a) {
+	return {ctor: 'Filter', _0: a};
+};
 var _rafikdraoui$potlatch$Model$FetchFailure = function (a) {
 	return {ctor: 'FetchFailure', _0: a};
 };
@@ -8042,7 +8155,8 @@ var _rafikdraoui$potlatch$Model$init = function (_p1) {
 		{
 			items: _elm_lang$core$Native_List.fromArray(
 				[]),
-			status: _rafikdraoui$potlatch$Model$Loading
+			status: _rafikdraoui$potlatch$Model$Loading,
+			query: ''
 		},
 		_elm_lang$core$Native_List.fromArray(
 			[
@@ -8198,28 +8312,85 @@ var _rafikdraoui$potlatch$View$viewRow = function (row) {
 		A2(_elm_lang$core$List$map, _rafikdraoui$potlatch$View$viewItem, row));
 };
 var _rafikdraoui$potlatch$View$viewItemsSection = function (items) {
-	var rows = A2(_rafikdraoui$potlatch$Utils$splitInGroupsOf, 2, items);
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		A2(_elm_lang$core$List$map, _rafikdraoui$potlatch$View$viewRow, rows));
+	if (_elm_lang$core$List$isEmpty(items)) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$h5,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('text-center')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('No items')
+						]))
+				]));
+	} else {
+		var rows = A2(_rafikdraoui$potlatch$Utils$splitInGroupsOf, 2, items);
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			A2(_elm_lang$core$List$map, _rafikdraoui$potlatch$View$viewRow, rows));
+	}
 };
-var _rafikdraoui$potlatch$View$viewItems = function (items) {
-	var _p0 = A2(
+var _rafikdraoui$potlatch$View$filterItems = F2(
+	function (query, items) {
+		var isValid = F2(
+			function (tags, name) {
+				return A2(
+					_elm_lang$core$List$all,
+					function (t) {
+						return A2(_elm_lang$core$String$contains, t, name);
+					},
+					tags);
+			});
+		var tags = _elm_lang$core$String$words(
+			_elm_lang$core$String$toLower(query));
+		return A2(
+			_elm_lang$core$List$filter,
+			function (_p0) {
+				return A2(
+					isValid,
+					tags,
+					_elm_lang$core$String$toLower(
+						function (_) {
+							return _.name;
+						}(_p0)));
+			},
+			items);
+	});
+var _rafikdraoui$potlatch$View$viewItems = function (model) {
+	var visibleItems = A2(_rafikdraoui$potlatch$View$filterItems, model.query, model.items);
+	var _p1 = A2(
 		_elm_lang$core$List$partition,
 		function (_) {
 			return _.taken;
 		},
-		items);
-	var taken = _p0._0;
-	var available = _p0._1;
+		visibleItems);
+	var taken = _p1._0;
+	var available = _p1._1;
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
+				A2(
+				_elm_lang$html$Html$h3,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('text-center')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Available')
+					])),
 				_rafikdraoui$potlatch$View$viewItemsSection(available),
 				A2(
 				_elm_lang$html$Html$hr,
@@ -8276,8 +8447,8 @@ var _rafikdraoui$potlatch$View$viewError = function (err) {
 			]));
 };
 var _rafikdraoui$potlatch$View$viewBody = function (model) {
-	var _p1 = model.status;
-	switch (_p1.ctor) {
+	var _p2 = model.status;
+	switch (_p2.ctor) {
 		case 'Loading':
 			return A2(
 				_elm_lang$html$Html$div,
@@ -8297,11 +8468,40 @@ var _rafikdraoui$potlatch$View$viewBody = function (model) {
 							]))
 					]));
 		case 'Error':
-			return _rafikdraoui$potlatch$View$viewError(_p1._0);
+			return _rafikdraoui$potlatch$View$viewError(_p2._0);
 		default:
-			return _rafikdraoui$potlatch$View$viewItems(model.items);
+			return _rafikdraoui$potlatch$View$viewItems(model);
 	}
 };
+var _rafikdraoui$potlatch$View$viewFilterForm = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('row')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('six columns offset-by-three')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$input,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$type$('search'),
+							_elm_lang$html$Html_Attributes$class('u-full-width'),
+							_elm_lang$html$Html_Attributes$placeholder('Filter items'),
+							_elm_lang$html$Html_Events$onInput(_rafikdraoui$potlatch$Model$Filter)
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[]))
+				]))
+		]));
 var _rafikdraoui$potlatch$View$viewHeader = A2(
 	_elm_lang$html$Html$header,
 	_elm_lang$core$Native_List.fromArray(
@@ -8344,14 +8544,7 @@ var _rafikdraoui$potlatch$View$viewHeader = A2(
 				[
 					_elm_lang$html$Html$text('Here are some of the items I am giving away! Let me know if you want any of them by messaging me at rafik@rafik.ca or through Facebook.')
 				])),
-			A2(
-			_elm_lang$html$Html$p,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text('Note: This is still a bit rough around the edges. I plan to post pictures soon, and provide a way to filter items based on keywords or categories.')
-				]))
+			_rafikdraoui$potlatch$View$viewFilterForm
 		]));
 var _rafikdraoui$potlatch$View$view = function (model) {
 	return A2(
