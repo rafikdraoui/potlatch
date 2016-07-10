@@ -84,7 +84,8 @@ viewItems model =
         (taken, available) = List.partition .taken visibleItems
     in
         div []
-            [ viewItemsSection available
+            [ h3 [ class "text-center" ] [ text "Available" ]
+            , viewItemsSection available
             , hr [] []
             , h3 [ class "text-center" ] [ text "Already taken" ]
             , viewItemsSection taken
@@ -93,10 +94,15 @@ viewItems model =
 
 viewItemsSection : List Item -> Html Msg
 viewItemsSection items =
-    let
-        rows = Utils.splitInGroupsOf 2 items
-    in
-        div [] <| List.map viewRow rows
+    if List.isEmpty items then
+        div []
+            [ h5 [ class "text-center" ] [ text "No items" ]
+            ]
+    else
+        let
+            rows = Utils.splitInGroupsOf 2 items
+        in
+            div [] <| List.map viewRow rows
 
 
 viewRow : List Item -> Html Msg
